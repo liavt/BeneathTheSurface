@@ -43,9 +43,7 @@ void runMotor(AF_DCMotor& mot){
 //  Serial.println(input);
 }
 
-void loop() {
-  digitalWrite(ledPin, HIGH);
-  
+void loop() {  
   while(Serial.available() > 0){
     int incomingByte = Serial.read();
 
@@ -59,8 +57,5 @@ void loop() {
       runMotor(bottom);
     }
   }
-
-  digitalWrite(ledPin, LOW);
-
-  delay(10);
 }
+

@@ -67,7 +67,7 @@ while keepAlive:
         print("Sending: "+str(val));
 
         ser.write(b"s")
-        ser.write(b"%d" % val)
+        ser.write(bytes("%d" % val,"ascii"))
         ser.write(b'\n');
 
         val = joystick.get_axis(1)
@@ -79,7 +79,7 @@ while keepAlive:
         print("Sending: "+str(val));
 
         ser.write(b"f")
-        ser.write(b"%d" % val)
+        ser.write(bytes("%d" % val,"ascii"))
         ser.write(b'\n');
     elif event.type == pygame.JOYHATMOTION:
         val = joystick.get_hat(0)
@@ -88,5 +88,3 @@ while keepAlive:
 
         ser.write(b"b");
         ser.write(b"%d" % int(val[1]*-1))
-
-    sleep(0.1)
