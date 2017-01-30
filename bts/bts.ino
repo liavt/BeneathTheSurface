@@ -17,7 +17,8 @@ void setup() {
  bottom.run(RELEASE);
 }
 
-void runMotor(AF_DCMotor& mot){
+void runMotor(AF_DCMotor& mot, int input){
+  /*
   String input;
 
   while(Serial.available()){
@@ -30,17 +31,17 @@ void runMotor(AF_DCMotor& mot){
     input += c;
   }
   
-  int output = input.toInt();
+  int output = input.toInt();*/
   
-  if(output < 0){
+  if(input < 0){
     mot.run(BACKWARD);
-    mot.setSpeed(output);  
+    mot.setSpeed(-input);  
   }else{
     mot.run(FORWARD);  
-    mot.setSpeed(output);
+    mot.setSpeed(input);
   }
 
-//  Serial.println(input);
+  Serial.println(input);
 }
 
 void loop() {  
@@ -48,14 +49,25 @@ void loop() {
     int incomingByte = Serial.read();
 
     if(incomingByte == 'f'){
-      runMotor(front);
-    }else if(incomingByte == 's'){
-      runMotor(side);  
-    }else if(incomingByte == 't'){
-      runMotor(top);
+      runMotor(front, 255);
     }else if(incomingByte == 'b'){
-      runMotor(bottom);
+      runMotor(front, -254);  
+    }else if(incomingByte == 'r'){
+      runMotor(side, 255);
+    }else if(incomingByte == 'l'){
+      runMotor(side, -254);
+    }else if(incomingByte == 'c'){
+      runMotor(side, 0);
+    }else if(incomingByte == 's'){
+      runMotor(front, 0);
+    }else if(incomingByte == 'u'){
+      runMotor(top, 255);
+    }else if(incomingByte == 'd'){
+      runMotor(top, -254);
+    }else if(incomingByte == 'n'){
+      runMotor(top, 0);
     }
   }
 }
+
 

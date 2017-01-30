@@ -62,29 +62,36 @@ while keepAlive:
         if val < 0.05 and val > -0.05:
             val = 0;
 
-        val = (int(val * 255));
+        if val > 0.5:
+            val = b"r";
+        elif val < -0.5:
+            val = b"l"
+        else:
+            val = b"c"
 
         print("Sending: "+str(val));
 
-        ser.write(b"s")
-        ser.write(bytes("%d" % val,"ascii"))
-        ser.write(b'\n');
+        ser.write(val)
 
         val = joystick.get_axis(1)
         if val < 0.05 and val > -0.05:
             val = 0;
 
-        val = -(int(val * 255));
+        if val > 0.5:
+            val = b"f";
+        elif val < -0.5:
+            val = b"b"
+        else:
+            val = b"s"
 
-        print("Sending: "+str(val));
+        print("Sending: " + str(val));
 
-        ser.write(b"f")
-        ser.write(bytes("%d" % val,"ascii"))
-        ser.write(b'\n');
+        ser.write(val)
     elif event.type == pygame.JOYHATMOTION:
         val = joystick.get_hat(0)
-        ser.write(b"t")
-        ser.write(b"%d" % int(val[1]))
-
-        ser.write(b"b");
-        ser.write(b"%d" % int(val[1]*-1))
+        if val[1] == 1:
+            ser.write(b"u")
+        elif val[1] == -1:
+            ser.write(b"d")
+        else:
+            ser.write(b"n")
